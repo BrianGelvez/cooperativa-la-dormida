@@ -1,73 +1,14 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Header from "@/components/layout/header"
 import Footer from "@/components/layout/footer"
 import { Calendar, Clock, User, ArrowRight, Megaphone, AlertTriangle, Info } from "lucide-react"
+import { news, featuredNews } from "./posts"
 
 export default function NoticiasPage() {
-  const featuredNews = {
-    id: 1,
-    title: "Nueva Tarifa Eléctrica Vigente desde Enero 2025",
-    excerpt:
-      "Informamos a todos los socios sobre los nuevos valores tarifarios que entrarán en vigencia el próximo mes.",
-    content: "La cooperativa informa que debido a los ajustes nacionales en el sector eléctrico...",
-    date: "2024-12-20",
-    author: "Administración",
-    category: "Importante",
-    image: "/placeholder.svg?height=400&width=600",
-    featured: true,
-  }
-
-  const news = [
-    {
-      id: 2,
-      title: "Mantenimiento Programado de Internet - Zona Centro",
-      excerpt: "Se realizarán trabajos de mejora en la red de fibra óptica el próximo sábado.",
-      date: "2024-12-18",
-      author: "Área Técnica",
-      category: "Mantenimiento",
-      readTime: "2 min",
-    },
-    {
-      id: 3,
-      title: "Nuevas Promociones en Farmacia Social",
-      excerpt: "Descuentos especiales en medicamentos para la tercera edad durante todo enero.",
-      date: "2024-12-15",
-      author: "Farmacia Social",
-      category: "Promociones",
-      readTime: "3 min",
-    },
-    {
-      id: 4,
-      title: "Asamblea Anual de Socios - 15 de Febrero",
-      excerpt: "Convocatoria oficial para la asamblea anual donde se presentará el balance del año.",
-      date: "2024-12-10",
-      author: "Consejo de Administración",
-      category: "Eventos",
-      readTime: "5 min",
-    },
-    {
-      id: 5,
-      title: "Ampliación de Cobertura de Internet Rural",
-      excerpt: "La cooperativa extiende su red de fibra óptica a nuevas zonas rurales del distrito.",
-      date: "2024-12-05",
-      author: "Gerencia Técnica",
-      category: "Infraestructura",
-      readTime: "4 min",
-    },
-    {
-      id: 6,
-      title: "Programa de Descuentos para Jubilados",
-      excerpt: "Nuevos beneficios sociales para socios jubilados en todos nuestros servicios.",
-      date: "2024-12-01",
-      author: "Área Social",
-      category: "Beneficios",
-      readTime: "3 min",
-    },
-  ]
-
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case "Importante":
@@ -185,8 +126,10 @@ export default function NoticiasPage() {
                       {new Date(article.date).toLocaleDateString("es-AR")}
                     </div>
                   </div>
-                  <Button variant="outline" size="sm">
-                    Leer más
+                  <Button asChild variant="outline" size="sm">
+                    <Link href={`/noticias/${article.id}`}>
+                      Leer más
+                    </Link>
                   </Button>
                 </div>
               </CardContent>
