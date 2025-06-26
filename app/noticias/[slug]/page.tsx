@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { featuredNews, news, type NewsPost } from "../posts"
+import type { Metadata } from "next"
 
 interface Props {
   params: { slug: string }
@@ -94,4 +95,20 @@ export function generateStaticParams() {
     { slug: featuredNews.slug },
     ...news.map((n: NewsPost) => ({ slug: n.slug }))
   ]
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const { slug } = params;
+  const post = slug === featuredNews.slug ? featuredNews : news.find(n => n.slug === slug);
+  if (!post) return { title: "Noticia no encontrada" };
+  return {
+    title: post.title + " | Cooperativa La Dormida",
+    description: post.excerpt,
+    openGraph: {
+      title: post.title + " | Cooperativa La Dormida",
+      description: post.excerpt,
+      images: post.image ? [post.image] : undefined,
+      type: "article"
+    }
+  };
 }
