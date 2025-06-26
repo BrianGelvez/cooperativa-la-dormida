@@ -7,18 +7,20 @@ import { notFound } from "next/navigation"
 import { featuredNews, news, type NewsPost } from "../posts"
 
 interface Props {
-  params: { id: string }
+  params: { slug: string }
 }
 
 export default async function NoticiaIndividual({ params }: Props) {
-  const { id } = await params;
-  const numId = Number(id);
-  const post: NewsPost | undefined = numId === featuredNews.id ? featuredNews : news.find(n => n.id === numId);
+  const { slug } = await params;
+  const post: NewsPost | undefined =
+    slug === featuredNews.slug
+      ? featuredNews
+      : news.find(n => n.slug === slug);
 
   if (!post) return notFound();
 
   // Noticias relacionadas (misma categoría, excluyendo la actual)
-  const related = news.filter(n => n.category === post.category && n.id !== post.id).slice(0, 2);
+  const related = news.filter(n => n.category === post.category && n.slug !== post.slug).slice(0, 2);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -72,8 +74,8 @@ export default async function NoticiaIndividual({ params }: Props) {
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><ArrowRight className="w-4 h-4" /> Noticias relacionadas</h2>
             <ul className="space-y-3">
               {related.map(r => (
-                <li key={r.id}>
-                  <Link href={`/noticias/${r.id}`} className="text-coop-green hover:underline font-medium">
+                <li key={r.slug}>
+                  <Link href={`/noticias/${r.slug}`} className="text-coop-green hover:underline font-medium">
                     {r.title}
                   </Link>
                 </li>
@@ -89,7 +91,7 @@ export default async function NoticiaIndividual({ params }: Props) {
 
 export function generateStaticParams() {
   return [
-    { id: String(featuredNews.id) },
-    ...news.map((n: { id: number }) => ({ id: String(n.id) }))
+    { slug: featuredNews.slug },
+    ...news.map((n: NewsPost) => ({ slug: n.slug }))
   ]
 }

@@ -90,9 +90,11 @@ export default function NoticiasPage() {
                       {featuredNews.author}
                     </div>
                   </div>
-                  <Button className="bg-coop-green hover:bg-coop-green/90">
-                    Leer Completa
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                  <Button asChild className="bg-coop-green hover:bg-coop-green/90">
+                    <Link href={`/noticias/${featuredNews.slug}`}>
+                      Leer Completa
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Link>
                   </Button>
                 </CardContent>
               </div>
@@ -127,7 +129,7 @@ export default function NoticiasPage() {
                     </div>
                   </div>
                   <Button asChild variant="outline" size="sm">
-                    <Link href={`/noticias/${article.id}`}>
+                    <Link href={`/noticias/${article.slug}`}>
                       Leer más
                     </Link>
                   </Button>
