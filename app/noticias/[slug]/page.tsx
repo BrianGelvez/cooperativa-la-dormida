@@ -11,6 +11,8 @@ interface Props {
   params: { slug: string }
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export default async function NoticiaIndividual({ params }: Props) {
   const { slug } = await params;
   const post: NewsPost | undefined =
@@ -101,14 +103,21 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const { slug } = params;
   const post = slug === featuredNews.slug ? featuredNews : news.find(n => n.slug === slug);
   if (!post) return { title: "Noticia no encontrada" };
+  const imageUrl = post.image ? (post.image.startsWith('http') ? post.image : `${SITE_URL}${post.image}`) : undefined;
   return {
     title: post.title + " | Cooperativa La Dormida",
     description: post.excerpt,
     openGraph: {
       title: post.title + " | Cooperativa La Dormida",
       description: post.excerpt,
-      images: post.image ? [post.image] : undefined,
+      images: imageUrl ? [imageUrl] : undefined,
       type: "article"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title + " | Cooperativa La Dormida",
+      description: post.excerpt,
+      images: imageUrl ? [imageUrl] : undefined
     }
   };
 }
