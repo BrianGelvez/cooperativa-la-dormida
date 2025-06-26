@@ -6,9 +6,9 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Cooperativa La Dormida - Sistema de Autogestión",
+  title: "Cooperativa La Dormida - Blog informativo",
   description:
-    "Plataforma web para socios de la Cooperativa Eléctrica La Dormida. Consulta boletas, realiza pagos, accede a beneficios y más.",
+    "Página web informativa de la Cooperativa Eléctrica La Dormida.",
   keywords: "cooperativa, electricidad, internet, television, farmacia, La Dormida",
     generator: 'v0.dev'
 }
